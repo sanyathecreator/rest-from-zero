@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"c:\\\\Users\\\\olexx\\\\Desktop\\\\rest-from-zero\" -Force -ErrorAction SilentlyContinue)",
+      "Bash(Select-Object Name)",
+      "Bash(netstat -ano)",
+      "Bash(findstr :5432)",
+      "Bash(docker exec *)",
+      "Bash(Get-Process -Id 6684, 10244)",
+      "Bash(Select-Object Id, Name, Path)",
+      "PowerShell(Get-Process -Id 6684, 10244)",
+      "PowerShell(tasklist /fi \"PID eq 6684\")",
+      "PowerShell(tasklist /fi \"PID eq 10244\")"
+    ]
+  }
+}
