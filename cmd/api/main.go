@@ -38,6 +38,15 @@ func main() {
 	mux.HandleFunc("/tasks", methodHandler(handlers.GetAllTasks, "GET"))
 	mux.HandleFunc("/tasks/create", methodHandler(handlers.CreateTask, "POST"))
 	mux.HandleFunc("/tasks/", taskIDHandler(handlers))
+
+	loggdMux := logginMiddleware(mux)
+
+	serverAddr := ":" + serverPort
+
+	err = http.ListenAndServe(serverAddr, loggdMux)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func methodHandler(handlerFunc http.HandlerFunc, allowedMethod string) http.HandlerFunc {
@@ -62,4 +71,11 @@ func taskIDHandler(handlers *handlers.Handlers) http.HandlerFunc {
 			http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
 		}
 	}
+}
+
+func logginMiddleware(next *http.ServeMux) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("%s %s %s", r.Method, r.URL.Path, r.RemoteAddr)
+		next.ServeHTTP(w, r)
+	})
 }
