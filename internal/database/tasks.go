@@ -60,7 +60,7 @@ func (s *TaskStore) Create(input models.CreateTaskInput) (*models.Task, error) {
 
 	query := `
 	INSERT INTO tasks (title, description, completed, created_at, updated_at) 
-	VALUES ($1, $2, $3, $4, $5);
+	VALUES ($1, $2, $3, $4, $5)
 	returning id, title, description, completed, created_at, updated_at;
 	`
 
